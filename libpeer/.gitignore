@@ -1,2 +1,16 @@
 cmake
-dist
+toolchains
+dist_debug
+dist_release
+cmake_win_build_debug
+cmake_win_build_release
+third_party/cJSON/build_debug
+third_party/cJSON/build_release
+third_party/libsrtp/build_debug
+third_party/libsrtp/build_release
+third_party/mbedtls/build_debug
+third_party/mbedtls/build_release
+third_party/MQTT-C/build_debug
+third_party/MQTT-C/build_release
+third_party/usrsctp/build_debug
+third_party/usrsctp/build_release
