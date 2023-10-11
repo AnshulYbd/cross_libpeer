@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Linaro ToolChain 5.4.1 - Anshul",
+        "toolchainFile": "${workspaceFolder}/tc-i686-mingw32.cmake"
+    },
+    {
+        "name": "Linaro ToolChain 7.5.0-2019 - Anshul",
+        "toolchainFile": "${workspaceFolder}/tc7-i686-mingw32.cmake"
+    },
+    {
+        "name": "ARM ToolChain 10.3-2021.07 - Anshul",
+        "toolchainFile": "${workspaceFolder}/tc-none10.cmake"
+    }
+]

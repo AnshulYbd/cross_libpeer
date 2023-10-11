@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "cmake",
+            "label": "BirdDog libpeer cmake build task with single target",
+            "command": "build",
+            "targets": [
+                // "${workspaceFolder}/examples/sample/sample"
+                "peer"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Build peer firmware"
+        },
+        // {
+        //     "label": "cmake",
+        //     "type": "shell",
+        //     "options": {
+        //         "cwd": "${workspaceRoot}/build"
+        //     },
+        //     "command": "cmake \"Unix Makefiles\"  ${workspaceRoot}",
+        //     "problemMatcher": []
+        // }
+    ]
+}

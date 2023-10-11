@@ -1,0 +1,1 @@
+./sshpass -v -p abcd@123 scp -o StrictHostKeyChecking=no anshuly@192.168.1.10:/home/anshuly/toolchain/linaro541/gcc-linaro-5.4.1-2017.01-i686-mingw32_arm-linux-gnueabihf.tar.xz .

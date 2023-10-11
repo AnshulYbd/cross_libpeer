@@ -1,0 +1,22 @@
+SET(CMAKE_SYSTEM_NAME Linux)
+SET(CMAKE_SYSTEM_PROCESSOR armv7l)
+SET(CMAKE_SYSTEM_VERSION 1)
+set(CMAKE_CROSSCOMPILING TRUE)
+set(TOOLCHAIN_PREFIX i686-mingw32)
+set(CMAKE_LIBRARY_ARCHITECTURE arm-linux-gnueabihf)
+set(BUILD_TOOL_ROOT_PATH "D:/toolchains/$ENV{GCC_NAME5}" )
+set(sysroot_target  ${BUILD_TOOL_ROOT_PATH}/arm-linux-gnueabihf/libc)
+set(tools           ${BUILD_TOOL_ROOT_PATH}/bin)
+
+set(CMAKE_C_COMPILER    ${tools}/arm-linux-gnueabihf-gcc.exe)
+set(CMAKE_CXX_COMPILER  ${tools}/arm-linux-gnueabihf-g++.exe)
+
+set(CMAKE_SYSROOT           ${sysroot_target})
+#set(CMAKE_FIND_ROOT_PATH    ${sysroot_target})
+set(CMAKE_SKIP_BUILD_RPATH  TRUE)
+SET(CMAKE_USE_EXTERNAL_RPATH_FOR_INSTALL TRUE)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")#https://stackoverflow.com/questions/53633705/cmake-the-c-compiler-is-not-able-to-compile-a-simple-test-program
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
