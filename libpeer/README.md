@@ -23,6 +23,9 @@ libpeer is a WebRTC implementation written in C, developed with BSD socket. The 
 * [cJSON](https://github.com/DaveGamble/cJSON.git)
 * [MQTT-C](https://github.com/LiamBindle/MQTT-C)
 
+### Below Getting Started is now replaced by windows batch files.
+>> release generated files failed to stream media
+>> 
 ### Getting Started
 ```bash
 $ sudo apt -y install git cmake
