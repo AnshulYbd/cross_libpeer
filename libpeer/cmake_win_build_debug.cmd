@@ -46,8 +46,6 @@ cp %root_dir%\CMakeLists_mod.txt %root_dir%\libpeer\CMakeLists.txt
 set new_root_dir=%root_dir%\libpeer
 cd %new_root_dir%
 
-rd /s /q %new_root_dir%\dist
-
 rd /s /q %new_root_dir%\third_party\libsrtp\build_debug
 mkdir %new_root_dir%\third_party\libsrtp\build_debug
 cd %new_root_dir%\third_party\libsrtp\build_debug
@@ -79,3 +77,7 @@ mkdir %new_root_dir%\cmake_win_build_debug && cd %new_root_dir%\cmake_win_build_
 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist  -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
 cd %root_dir%
+
+@REM BACKUP the INSTALLDIR
+rd /s /q %root_dir%\dist_debug
+cp -rf %new_root_dir%\dist %root_dir%\dist_debug

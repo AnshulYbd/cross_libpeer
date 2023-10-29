@@ -35,44 +35,49 @@ if exist "%GCC_PATH%" (
 	%EXRACT_BIN% x %GCC_NAME%.tar.xz -so | %EXRACT_BIN% x -si -y -ttar
 )
 
+rd /s /q %root_dir%\libpeer
 
-rd /s /q %root_dir%\dist_release
+git clone --recursive https://github.com/sepfy/libpeer
 
-rd /s /q %root_dir%\third_party\libsrtp\build_release
-mkdir %root_dir%\third_party\libsrtp\build_release
-cd %root_dir%\third_party\libsrtp\build_release
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DTEST_APPS=off -DCMAKE_INSTALL_PREFIX=%root_dir%\dist_release -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
+@rem backup original
+mv %root_dir%\libpeer\CMakeLists.txt %root_dir%\libpeer\CMakeLists.txt.org
+cp %root_dir%\CMakeLists_mod.txt %root_dir%\libpeer\CMakeLists.txt
+
+set new_root_dir=%root_dir%\libpeer
+cd %new_root_dir%
+
+rd /s /q %new_root_dir%\third_party\libsrtp\build_release
+mkdir %new_root_dir%\third_party\libsrtp\build_release
+cd %new_root_dir%\third_party\libsrtp\build_release
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DTEST_APPS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
 
-rd /s /q %root_dir%\third_party\cJSON\build_release
-mkdir %root_dir%\third_party\cJSON\build_release
-cd %root_dir%\third_party\cJSON\build_release
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DBUILD_SHARED_LIBS=off -DENABLE_CJSON_TEST=off -DCMAKE_INSTALL_PREFIX=%root_dir%\dist_release -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
+rd /s /q %new_root_dir%\third_party\cJSON\build_release
+mkdir %new_root_dir%\third_party\cJSON\build_release
+cd %new_root_dir%\third_party\cJSON\build_release
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DBUILD_SHARED_LIBS=off -DENABLE_CJSON_TEST=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
 
-rd /s /q %root_dir%\third_party\mbedtls\build_release
-mkdir %root_dir%\third_party\mbedtls\build_release
-cd %root_dir%\third_party\mbedtls\build_release
-sed -i 's/\/\/#define MBEDTLS_SSL_DTLS_SRTP/#define MBEDTLS_SSL_DTLS_SRTP/g' %root_dir%\third_party\mbedtls\include\mbedtls\mbedtls_config.h
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DENABLE_TESTING=off -DENABLE_PROGRAMS=off -DCMAKE_INSTALL_PREFIX=%root_dir%\dist_release -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
+rd /s /q %new_root_dir%\third_party\mbedtls\build_release
+mkdir %new_root_dir%\third_party\mbedtls\build_release
+cd %new_root_dir%\third_party\mbedtls\build_release
+sed -i 's/\/\/#define MBEDTLS_SSL_DTLS_SRTP/#define MBEDTLS_SSL_DTLS_SRTP/g' %new_root_dir%\third_party\mbedtls\include\mbedtls\mbedtls_config.h
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DENABLE_TESTING=off -DENABLE_PROGRAMS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
 
-rd /s /q %root_dir%\third_party\usrsctp\build_release
-mkdir %root_dir%\third_party\usrsctp\build_release
-cd %root_dir%\third_party\usrsctp\build_release
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -Dsctp_build_programs=off -DCMAKE_INSTALL_PREFIX=%root_dir%\dist_release -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
+rd /s /q %new_root_dir%\third_party\usrsctp\build_release
+mkdir %new_root_dir%\third_party\usrsctp\build_release
+cd %new_root_dir%\third_party\usrsctp\build_release
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -Dsctp_build_programs=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
 
-rd /s /q %root_dir%\third_party\MQTT-C\build_release
-mkdir %root_dir%\third_party\MQTT-C\build_release
-cd %root_dir%\third_party\MQTT-C\build_release
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release  -DMQTT_C_EXAMPLES=off -DCMAKE_PREFIX_PATH=%root_dir%\dist_release -DCMAKE_INSTALL_LIBDIR=%root_dir%\dist_release\lib -DCMAKE_INSTALL_INCLUDEDIR=%root_dir%\dist_release\include -DMQTT_C_MbedTLS_SUPPORT=on -DMBEDTLS_LIBRARY=%root_dir%/dist/libmbedtls.a -DMBEDTLS_INCLUDE_DIRS=%root_dir%/dist/include -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
-cmake --build . --target install
-cp %root_dir%\third_party\MQTT-C\examples\templates\mbedtls_sockets.h %root_dir%\dist_release\include\
+rd /s /q %new_root_dir%\cmake_win_build_release
+mkdir %new_root_dir%\cmake_win_build_release && cd %new_root_dir%\cmake_win_build_release
 
-rd /s /q %root_dir%\cmake_win_build_release
-mkdir %root_dir%\cmake_win_build_release && cd %root_dir%\cmake_win_build_release
-
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%root_dir%\dist_release  -DCMAKE_TOOLCHAIN_FILE=..\tc-%HOSTARCH%.cmake ..
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist  -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
 cmake --build . --target install
-cd %root_dir%
+cd %new_root_dir%
+
+@REM BACKUP the INSTALLDIR
+rd /s /q %new_root_dir%\dist_release
+mv %new_root_dir%\dist %new_root_dir%\dist_release
