@@ -39,39 +39,43 @@ rd /s /q %root_dir%\libpeer
 
 git clone --recursive https://github.com/sepfy/libpeer
 
+@rem backup original
+mv %root_dir%\libpeer\CMakeLists.txt %root_dir%\libpeer\CMakeLists.txt.org
+cp %root_dir%\CMakeLists_mod.txt %root_dir%\libpeer\CMakeLists.txt
+
 set new_root_dir=%root_dir%\libpeer
 cd %new_root_dir%
 
 rd /s /q %new_root_dir%\dist
 
-@REM rd /s /q %new_root_dir%\third_party\libsrtp\build_debug
-@REM mkdir %new_root_dir%\third_party\libsrtp\build_debug
-@REM cd %new_root_dir%\third_party\libsrtp\build_debug
-@REM cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DTEST_APPS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
-@REM cmake --build . --target install
+rd /s /q %new_root_dir%\third_party\libsrtp\build_debug
+mkdir %new_root_dir%\third_party\libsrtp\build_debug
+cd %new_root_dir%\third_party\libsrtp\build_debug
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DTEST_APPS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
+cmake --build . --target install
 
-@REM rd /s /q %new_root_dir%\third_party\cJSON\build_debug
-@REM mkdir %new_root_dir%\third_party\cJSON\build_debug
-@REM cd %new_root_dir%\third_party\cJSON\build_debug
-@REM cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DBUILD_SHARED_LIBS=off -DENABLE_CJSON_TEST=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
-@REM cmake --build . --target install
+rd /s /q %new_root_dir%\third_party\cJSON\build_debug
+mkdir %new_root_dir%\third_party\cJSON\build_debug
+cd %new_root_dir%\third_party\cJSON\build_debug
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DBUILD_SHARED_LIBS=off -DENABLE_CJSON_TEST=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
+cmake --build . --target install
 
-@REM rd /s /q %new_root_dir%\third_party\mbedtls\build_debug
-@REM mkdir %new_root_dir%\third_party\mbedtls\build_debug
-@REM cd %new_root_dir%\third_party\mbedtls\build_debug
-@REM sed -i 's/\/\/#define MBEDTLS_SSL_DTLS_SRTP/#define MBEDTLS_SSL_DTLS_SRTP/g' %new_root_dir%\third_party\mbedtls\include\mbedtls\mbedtls_config.h
-@REM cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DENABLE_TESTING=off -DENABLE_PROGRAMS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
-@REM cmake --build . --target install
+rd /s /q %new_root_dir%\third_party\mbedtls\build_debug
+mkdir %new_root_dir%\third_party\mbedtls\build_debug
+cd %new_root_dir%\third_party\mbedtls\build_debug
+sed -i 's/\/\/#define MBEDTLS_SSL_DTLS_SRTP/#define MBEDTLS_SSL_DTLS_SRTP/g' %new_root_dir%\third_party\mbedtls\include\mbedtls\mbedtls_config.h
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -DENABLE_TESTING=off -DENABLE_PROGRAMS=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
+cmake --build . --target install
 
-@REM rd /s /q %new_root_dir%\third_party\usrsctp\build_debug
-@REM mkdir %new_root_dir%\third_party\usrsctp\build_debug
-@REM cd %new_root_dir%\third_party\usrsctp\build_debug
-@REM cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -Dsctp_build_programs=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
-@REM cmake --build . --target install
+rd /s /q %new_root_dir%\third_party\usrsctp\build_debug
+mkdir %new_root_dir%\third_party\usrsctp\build_debug
+cd %new_root_dir%\third_party\usrsctp\build_debug
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fPIC" -Dsctp_build_programs=off -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist -DCMAKE_TOOLCHAIN_FILE=..\..\..\tc-%HOSTARCH%.cmake ..
+cmake --build . --target install
 
-@REM rd /s /q %new_root_dir%\cmake_win_build_debug
-@REM mkdir %new_root_dir%\cmake_win_build_debug && cd %new_root_dir%\cmake_win_build_debug
+rd /s /q %new_root_dir%\cmake_win_build_debug
+mkdir %new_root_dir%\cmake_win_build_debug && cd %new_root_dir%\cmake_win_build_debug
 
-@REM cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist  -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
-@REM cmake --build . --target install
-@REM cd %root_dir%
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=%new_root_dir%\dist  -DCMAKE_TOOLCHAIN_FILE=..\..\tc-%HOSTARCH%.cmake ..
+cmake --build . --target install
+cd %root_dir%
