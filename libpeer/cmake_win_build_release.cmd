@@ -79,5 +79,5 @@ cmake --build . --target install
 cd %new_root_dir%
 
 @REM BACKUP the INSTALLDIR
-rd /s /q %new_root_dir%\dist_release
-mv %new_root_dir%\dist %new_root_dir%\dist_release
+rd /s /q %root_dir%\dist_release
+cp -rf %new_root_dir%\dist %root_dir%\dist_release
